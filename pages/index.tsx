@@ -3,9 +3,7 @@ import Head from "next/head";
 import React from "react";
 import MainLayout from "../layouts/MainLayout";
 
-type Props = {};
-
-const index = (props: Props) => {
+const index = () => {
   return (
     <>
       <Head>
