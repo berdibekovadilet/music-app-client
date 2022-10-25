@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import Head from "next/head";
 import React from "react";
-import Navbar from "../components/Navbar";
+import MainLayout from "../layouts/MainLayout";
 
 type Props = {};
 
@@ -13,13 +13,14 @@ const index = (props: Props) => {
         <meta name="description" content="Music App" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <Container maxWidth="sm">
-        <div className="main_wrapper">
-          <h2>Добро пожаловать</h2>
-          <h3>Здесь собраны лучшие треки</h3>
-        </div>
-      </Container>
+      <MainLayout>
+        <Container maxWidth="sm">
+          <div className="main_wrapper">
+            <h2>Добро пожаловать</h2>
+            <h3>Здесь собраны лучшие треки</h3>
+          </div>
+        </Container>
+      </MainLayout>
     </>
   );
 };
