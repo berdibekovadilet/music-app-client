@@ -26,7 +26,8 @@ const Player = () => {
   const { pause, volume, active, duration, currentTime } = useTypedSelector(
     (state) => state.player
   );
-  const { pauseTrack, playTrack } = useActions();
+  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration } =
+    useActions();
 
   useEffect(() => {
     if (!audio) {
@@ -46,10 +47,15 @@ const Player = () => {
       audio.pause();
     }
   };
+
+  const changeVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+    audio.volume = Number(e.target.value) / 100;
+    setVolume(Number(e.target.value));
+  };
   return (
     <div className={styles.player}>
       <IconButton onClick={play}>
-        {!pause ? <Pause /> : <PlayArrow />}
+        {pause ? <PlayArrow /> : <Pause />}
       </IconButton>
       <Grid
         container
@@ -61,7 +67,7 @@ const Player = () => {
       </Grid>
       <TrackProgress left={0} right={100} onChange={() => ({})} />
       <VolumeUp style={{ marginLeft: "auto" }} />
-      <TrackProgress left={10} right={100} onChange={() => ({})} />
+      <TrackProgress left={volume} right={100} onChange={changeVolume} />
     </div>
   );
 };
