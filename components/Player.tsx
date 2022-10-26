@@ -1,9 +1,13 @@
 import { Pause, PlayArrow, VolumeUp } from "@mui/icons-material";
 import { Grid, IconButton } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useActions } from "../hooks/useActions";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 import styles from "../styles/Player.module.scss";
 import { ITrack } from "../types/tracks";
 import TrackProgress from "./TrackProgress";
+
+let audio;
 
 const Player = () => {
   const track: ITrack = {
@@ -18,11 +22,34 @@ const Player = () => {
       "http://localhost:8000/image/c5b43159-5cff-49b5-8eeb-d500f71dbb24.webp",
     comments: [],
   };
-  const active = false;
+
+  const { pause, volume, active, duration, currentTime } = useTypedSelector(
+    (state) => state.player
+  );
+  const { pauseTrack, playTrack } = useActions();
+
+  useEffect(() => {
+    if (!audio) {
+      audio = new Audio();
+      audio.src = track.audio;
+    } else {
+      play();
+    }
+  }, [active]);
+
+  const play = () => {
+    if (pause) {
+      playTrack();
+      audio.play();
+    } else {
+      pauseTrack();
+      audio.pause();
+    }
+  };
   return (
     <div className={styles.player}>
-      <IconButton onClick={(e) => e.stopPropagation()}>
-        {active ? <Pause /> : <PlayArrow />}
+      <IconButton onClick={play}>
+        {!pause ? <Pause /> : <PlayArrow />}
       </IconButton>
       <Grid
         container
