@@ -14,3 +14,4 @@ const MyApp: FC<AppProps> = ({ Component, ...rest }) => {
 };
 
 export default MyApp;
+
